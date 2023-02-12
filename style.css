@@ -1,0 +1,87 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+body{
+    display: grid;
+    place-content: center;
+    gap: 2rem;
+    min-height: 100vh;
+    background-image: conic-gradient(
+        at 125% 50%,
+        #b78cf7,
+        #ff7c94,
+        #ffcf0d,
+        #ff7c94,
+        #b78cf7
+    );
+    font-family: system-ui;
+}
+.button{
+    cursor: pointer;
+    display: grid;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: inherit;
+    color: hsl(320, 40%, 40%);
+    border-color: hsl(349 100% 95%);
+    padding: 0.75em 1.25em;
+    border: 0;
+    border-radius: 1.25rem;
+}
+.glow-effect{
+    /* do no change */
+    --glow-line-color: #fff;
+    --glow-line-thickness: 2px;
+    --glow-blur-color: #fff;
+    --glow-blur-size: 9px;
+    --container-offset: 100px;
+    position: relative;
+}
+.glow-container{
+    pointer-events: none;
+    position: absolute;
+    inset: calc(var(--container-offset) / -2);
+    width: calc(100% + var(--container-offset));
+    height: calc(100% + var(--container-offset));
+    opacity: 0;
+    /* outline: 3px solid blue; */
+}
+.glow-blur,
+.glow-line{
+    width: calc(100% - var(--container-offset));
+    height: calc(100% - var(--container-offset));
+    x: calc(var(--container-offset) /2);
+    y: calc(var(--container-offset) /2);
+    rx: 1.25rem;
+    fill: transparent;
+    stroke: black;
+    stroke-width: 5px;
+    stroke-dasharray: 20px 30px;
+    transition: stroke-dashoffset 1200ms;
+}
+
+.glow-effect:hover .glow-blur,
+.glow-effect:hover .glow-line{
+    stroke-dashoffset: -65px;
+}
+.glow-line{
+    stroke: var(--glow-line-color);
+    stroke-width: var(--glow-line-thickness);
+}
+.glow-blur{
+    filter: blur(var(--glow-blur-size));
+    stroke: var(--glow-blur-color);
+    stroke-width: var(--glow-blur-size);
+}
+.glow-effect:is(:hover, :focus) .glow-container {
+    animation: glow-visibility 1200ms;
+}
+@keyframes glow-visibility {
+    0% {opacity: 0}
+    25% {opacity: 1}
+    75% {opacity: 1}
+    100% {opacity: 0}
+
+}
